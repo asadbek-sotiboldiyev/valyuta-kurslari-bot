@@ -48,6 +48,7 @@ app = Flask(__name__)
 def webhook():
     if request.method == 'POST':
         update = Update.de_json(request.get_json(force=True), application.bot)
+        application.update_queue.put_nowait(update)
         return 'ok'
     else:
         return "<h1>Webhook ishlayapdi</h1>"
